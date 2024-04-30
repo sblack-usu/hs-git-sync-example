@@ -34,6 +34,6 @@ jobs:
         from hsclient import HydroShare
         hs = HydroShare(username=os.environ['HYDROSHARE_USERNAME'], password=os.environ['HYDROSHARE_PASSWORD'])
         hs_res = hs.resource(os.environ['HYDROSHARE_RESOURCE_ID'])
-        notebook_files = os.listdir('notebooks')
+        notebook_files = ['notebooks/' + s for s in os.listdir('notebooks')]
         hs_res.file_upload(*notebook_files, destination_path='notebooks')
         "
