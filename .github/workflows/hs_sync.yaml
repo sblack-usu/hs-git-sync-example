@@ -18,24 +18,22 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Setup Environment
+    - name: Install dependencies
       env:
         HYDROSHARE_USERNAME: ${{ env.HYDROSHARE_USERNAME }}
         HYDROSHARE_PASSWORD: ${{ secrets.HYDROSHARE_PASSWORD }}
         HYDROSHARE_RESOURCE_ID: ${{ env.HYDROSHARE_RESOURCE_ID }}
       run: |
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip
-            pip install hsclient
+        python -m pip install --upgrade pip
+        pip install hsclient
 
-      - name: Upload files to HydroShare
-        run: |
-          python -c "
-          import os
-          from hsclient import HydroShare
+    - name: Upload files to HydroShare
+      run: |
+        python -c "
+        import os
+        from hsclient import HydroShare
 
-          hs = HydroShare(username=os.environ['HYDROSHARE_USERNAME'], password=os.environ['HYDROSHARE_PASSWORD'])
-          hs_res = hs.resource(os.environ['HYDROSHARE_RESOURCE_ID'])
-          hs_res.file_upload(os.listdir('notebooks'), destination_path='notebooks')
-          "
+        hs = HydroShare(username=os.environ['HYDROSHARE_USERNAME'], password=os.environ['HYDROSHARE_PASSWORD'])
+        hs_res = hs.resource(os.environ['HYDROSHARE_RESOURCE_ID'])
+        hs_res.file_upload(os.listdir('notebooks'), destination_path='notebooks')
+        "
