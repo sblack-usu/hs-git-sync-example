@@ -32,7 +32,9 @@ jobs:
         python -c "
         import os
         from hsclient import HydroShare
-
+        print('woot')
+        print(os.environ['HYDROSHARE_USERNAME'])
+        print(os.environ['HYDROSHARE_PASSWORD'])
         hs = HydroShare(username=os.environ['HYDROSHARE_USERNAME'], password=os.environ['HYDROSHARE_PASSWORD'])
         hs_res = hs.resource(os.environ['HYDROSHARE_RESOURCE_ID'])
         hs_res.file_upload(os.listdir('notebooks'), destination_path='notebooks')
