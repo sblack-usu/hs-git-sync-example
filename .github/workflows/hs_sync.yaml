@@ -25,9 +25,9 @@ jobs:
 
     - name: Upload files to HydroShare
       env:
-        HYDROSHARE_USERNAME: ${{ env.HYDROSHARE_USERNAME }}
+        HYDROSHARE_USERNAME: ${{ vars.HYDROSHARE_USERNAME }}
         HYDROSHARE_PASSWORD: ${{ secrets.HYDROSHARE_PASSWORD }}
-        HYDROSHARE_RESOURCE_ID: ${{ env.HYDROSHARE_RESOURCE_ID }}
+        HYDROSHARE_RESOURCE_ID: ${{ vars.HYDROSHARE_RESOURCE_ID }}
       run: |
         python -c "
         import os
@@ -35,6 +35,7 @@ jobs:
         print('woot')
         print(os.environ['HYDROSHARE_USERNAME'])
         print(os.environ['HYDROSHARE_PASSWORD'])
+        print(os.environ['HYDROSHARE_RESOURCE_ID'])
         hs = HydroShare(username=os.environ['HYDROSHARE_USERNAME'], password=os.environ['HYDROSHARE_PASSWORD'])
         hs_res = hs.resource(os.environ['HYDROSHARE_RESOURCE_ID'])
         hs_res.file_upload(os.listdir('notebooks'), destination_path='notebooks')
