@@ -21,7 +21,7 @@ jobs:
     - name: Sync Notebooks
       env:
         HYDROSHARE_USERNAME: ${{ env.HYDROSHARE_USERNAME }}
-        HYDROSHARE_PASSWORD: ${{ secrets.HYDROSHARE_USERNAME }}
+        HYDROSHARE_PASSWORD: ${{ secrets.HYDROSHARE_PASSWORD }}
         HYDROSHARE_RESOURCE_ID: ${{ env.HYDROSHARE_RESOURCE_ID }}
       run: |
         import os
