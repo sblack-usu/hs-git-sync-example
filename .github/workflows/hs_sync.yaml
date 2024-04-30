@@ -18,15 +18,24 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Sync Notebooks
+    - name: Setup Environment
       env:
         HYDROSHARE_USERNAME: ${{ env.HYDROSHARE_USERNAME }}
         HYDROSHARE_PASSWORD: ${{ secrets.HYDROSHARE_PASSWORD }}
         HYDROSHARE_RESOURCE_ID: ${{ env.HYDROSHARE_RESOURCE_ID }}
       run: |
-        import os
-        python -m pip install --upgrade pip
-        pip install hsclient
-        hs = HydroShare(username=$HYDROSHARE_USERNAME, password=$HYDROSHARE_PASSWORD)
-        hs_res = hs.resource($HYDROSHARE_RESOURCE_ID)
-        hs_res.file_upload(os.listdir('notebooks'), destination_path='notebooks')
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install hsclient
+
+      - name: Upload files to HydroShare
+        run: |
+          python -c "
+          import os
+          from hsclient import HydroShare
+
+          hs = HydroShare(username=os.environ['HYDROSHARE_USERNAME'], password=os.environ['HYDROSHARE_PASSWORD'])
+          hs_res = hs.resource(os.environ['HYDROSHARE_RESOURCE_ID'])
+          hs_res.file_upload(os.listdir('notebooks'), destination_path='notebooks')
+          "
